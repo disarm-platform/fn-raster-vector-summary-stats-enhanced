@@ -1,6 +1,8 @@
 import json
 import shutil
 import sys
+from json import JSONDecodeError
+from urllib.error import URLError
 
 import config
 from function import handler
@@ -21,8 +23,8 @@ def handle_error(error, message='Unknown error, please ask the admins to check c
     # This will be written to container logs
     sys.stderr.write(str(error))
     # This will be sent back to caller/server
-    json.dumps({"function_status": "error",
-                "content": str(message)})
+    print(json.dumps({"function_status": "error",
+                      "content": str(message)}))
 
 
 # Please give me content that JSON-dumpable:
@@ -36,7 +38,8 @@ if __name__ == "__main__":
 
     try:
         # Get and parse params
-        params = get_params_from_stdin()
+        # params = get_params_from_stdin()
+        params = json.load(open('samples/swz_tiny_req.json'))
 
         # Mutate the params to get them ready for use
         preprocess_params.preprocess(params)
@@ -45,8 +48,12 @@ if __name__ == "__main__":
         function_response = handler.run_function(params)
         handle_success(function_response)
 
-    except json.JSONDecodeError as e:
+    except JSONDecodeError as e:
         handle_error(e, "Empty request passed. Please check docs")
+
+    except URLError as e:
+        handle_error(e, "Problem downloading files. Please check URLs passed as parameters are "
+                        "valid, are live and are publicly accessible.")
 
     # Bare exceptions are not recommended - see https://www.python.org/dev/peps/pep-0008/#programming-recommendations
     # We're using one to make sure that _any_ errors are packaged and returned to the calling server,
