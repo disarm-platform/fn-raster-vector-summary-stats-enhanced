@@ -2,10 +2,10 @@ provider:
   name: faas
   gateway: http://faas.srv.disarm.io
 functions:
-  fn-raster-vector-summary-stats_0_0_3:
+  fn-raster-vector-summary-stats_0_0_4:
     handler: ./fn-raster-vector-summary-stats
     lang: dockerfile
-    image: disarm/fn-raster-vector-summary-stats:0.0.3
+    image: disarm/fn-raster-vector-summary-stats:0.0.4
     environment:
       write_debug: true
       write_timeout: 60
