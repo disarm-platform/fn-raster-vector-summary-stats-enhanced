@@ -9,7 +9,7 @@ def run_function(params):
     # Prepare the parameters
     subject = params['subject']
     raster = params['raster']
-    stats = params.get('stats', 'sum')
+    stats = params.get('stats', 'mean')
     geojson_out = params.get('geojson_out', True)
 
     try:
