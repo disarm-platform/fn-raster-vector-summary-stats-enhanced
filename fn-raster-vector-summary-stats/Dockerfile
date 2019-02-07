@@ -11,6 +11,7 @@ COPY requirements.txt .
 RUN pip install -r requirements.txt
 
 COPY index.py .
+COPY config.py .
 COPY function function
 
 # Populate example here - i.e. "cat", "sha512sum" or "node index.js"
