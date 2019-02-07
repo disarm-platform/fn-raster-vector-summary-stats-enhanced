@@ -2,7 +2,6 @@ import base64
 import hashlib
 import json
 import os
-import tempfile
 import uuid
 from urllib.parse import urlparse
 from urllib.request import urlretrieve
