@@ -30,7 +30,7 @@ def download_or_convert_from_base64(key, params):
 def write_to_file(key, params):
     value = params[key]
 
-    filename = temp_filename()
+    filename = get_file_name()
 
     # Write STRING to file
     open(filename, 'w').write(json.dumps(value))
@@ -43,10 +43,7 @@ def write_to_file(key, params):
 def download_to_file(key: str, params: dict):
     url = params[key]
 
-    # Hash the URL to create a temp filename
-    hashed_url = hash_url(url)
-
-    filename = os.path.join(config.TEMP, hashed_url)
+    filename = get_file_name()
 
     # Download from URL to temporary file
     urlretrieve(url, filename)
@@ -63,7 +60,7 @@ def decode_base64_to_file(key: str, params: dict):
     # Decode base64 string
     decoded = base64.b64decode(bytes(value, "utf-8"))
 
-    filename = temp_filename()
+    filename = get_file_name()
 
     # Write BYTES to file
     open(filename, 'wb').write(decoded)
@@ -91,6 +88,9 @@ def hash_url(url: str) -> str:
 # Creating this using tempfile.NamedTemporaryFile() or similar results in the file
 # being closed as soon as the context manager closes: doesn't seem to be another way
 # to keep the temporary file around long enough to be used in the runner.
-def temp_filename():
+def get_file_name(temp: bool = True):
     random_string = uuid.uuid4().hex
-    return os.path.join(config.TEMP, random_string)
+    if temp:
+        return os.path.join(config.TEMP, random_string)
+    else:
+        return os.path.join('/tmp', random_string)
