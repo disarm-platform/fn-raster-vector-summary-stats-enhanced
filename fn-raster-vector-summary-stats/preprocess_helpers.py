@@ -3,6 +3,7 @@ import hashlib
 import json
 import os
 import uuid
+from os import path
 from urllib.parse import urlparse
 from urllib.request import urlretrieve
 
@@ -30,7 +31,8 @@ def download_or_convert_from_base64(key, params):
 def write_to_file(key, params):
     value = params[key]
 
-    filename = get_file_name()
+    hash = hash_this(value)
+    filename = get_file_path()
 
     # Write STRING to file
     open(filename, 'w').write(json.dumps(value))
@@ -43,10 +45,12 @@ def write_to_file(key, params):
 def download_to_file(key: str, params: dict):
     url = params[key]
 
-    filename = get_file_name()
+    hash = hash_this(url)
+    filename = get_file_path(temp=False, force_name=hash)
 
-    # Download from URL to temporary file
-    urlretrieve(url, filename)
+    if not path.exists(filename):
+        # Download from URL to temporary file
+        urlretrieve(url, filename)
 
     # Replace params[key] with temporary file name
     params[key] = filename
@@ -60,7 +64,7 @@ def decode_base64_to_file(key: str, params: dict):
     # Decode base64 string
     decoded = base64.b64decode(bytes(value, "utf-8"))
 
-    filename = get_file_name()
+    filename = get_file_path()
 
     # Write BYTES to file
     open(filename, 'wb').write(decoded)
@@ -80,17 +84,17 @@ def is_url(url):
 
 
 # Return MD5 hash of URL
-def hash_url(url: str) -> str:
-    return hashlib.md5(url.encode('utf-8')).hexdigest()
+def hash_this(string: str) -> str:
+    return hashlib.md5(string.encode('utf-8')).hexdigest()
 
 
-# Create a random filename in the temporary directory
+# Create a filename for writing
 # Creating this using tempfile.NamedTemporaryFile() or similar results in the file
 # being closed as soon as the context manager closes: doesn't seem to be another way
 # to keep the temporary file around long enough to be used in the runner.
-def get_file_name(temp: bool = True):
-    random_string = uuid.uuid4().hex
+def get_file_path(temp: bool = True, force_name: str = ''):
+    file_name = force_name or uuid.uuid4().hex
     if temp:
-        return os.path.join(config.TEMP, random_string)
+        return os.path.join(config.TEMP, file_name)
     else:
-        return os.path.join('/tmp', random_string)
+        return os.path.join('/tmp', file_name)
