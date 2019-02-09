@@ -35,5 +35,5 @@
       }
     ]
   },
-  "raster": "http://eggeggeggdoesnotexists.com"
+  "raster": "https://faas1.ams3.digitaloceanspaces.com/testing-source-data/tiny_raster.tif"
 }

@@ -85,7 +85,7 @@ def is_url(url):
 
 # Return MD5 hash of URL
 def hash_this(string: str) -> str:
-    return hashlib.md5(string.encode('utf-8')).hexdigest()
+    return hashlib.md5(str(string).encode('utf-8')).hexdigest()
 
 
 # Create a filename for writing
