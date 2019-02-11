@@ -20,11 +20,12 @@ def get_params_from_stdin() -> dict:
 
 
 def handle_error(error, message='Unknown error, please ask the admins to check container logs for more info'):
+    raise error
     # This will be written to container logs
-    sys.stderr.write(str(error))
+    # sys.stderr.write(str(error))
     # This will be sent back to caller/server
-    print(json.dumps({"function_status": "error",
-                      "content": str(message)}))
+    # print(json.dumps({"function_status": "error",
+    #                   "content": str(message)}))
 
 
 # Please give me content that JSON-dumpable:
@@ -38,7 +39,8 @@ if __name__ == "__main__":
 
     try:
         # Get and parse params
-        params = get_params_from_stdin()
+        # params = get_params_from_stdin()
+        params = json.load(open('samples/swz_tiny_req.json'))
 
         # Mutate the params to get them ready for use
         preprocess_params.preprocess(params)

@@ -1,6 +1,6 @@
 provider:
   name: faas
-  gateway: http://faas.srv.disarm.io
+  gateway: http://faas.srv.locational.io
 functions:
   fn-raster-vector-summary-stats_0_0_6:
     handler: ./fn-raster-vector-summary-stats

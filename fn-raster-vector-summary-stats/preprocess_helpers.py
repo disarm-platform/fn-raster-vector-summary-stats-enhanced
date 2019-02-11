@@ -10,6 +10,9 @@ from urllib.request import urlretrieve
 # Mutates the params, replacing with local temporary file if required
 import config
 
+def required_exists_not_null(key, params):
+    pass
+
 
 def download_or_convert_from_base64(key, params):
     if key not in params:
