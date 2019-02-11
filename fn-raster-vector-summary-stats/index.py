@@ -22,9 +22,16 @@ def get_params_from_stdin() -> dict:
 def handle_error(error, message='Unknown error, please ask the admins to check container logs for more info'):
     # This will be written to container logs
     sys.stderr.write(str(error))
+
     # This will be sent back to caller/server
+    start = "Error from function: "
+
+    if type(error) is not ValueError:
+        content = start + str(message)
+    else:
+        content = start + str(error)
     print(json.dumps({"function_status": "error",
-                      "content": str(message)}))
+                      "content": content}))
 
 
 # Please give me content that JSON-dumpable:
@@ -48,7 +55,7 @@ if __name__ == "__main__":
         handle_success(function_response)
 
     except JSONDecodeError as e:
-        handle_error(e, "Empty request passed. Please check docs")
+        handle_error(e, "Request received by function is not valid JSON. Please check docs")
 
     except URLError as e:
         handle_error(e, "Problem downloading files. Please check URLs passed as parameters are "

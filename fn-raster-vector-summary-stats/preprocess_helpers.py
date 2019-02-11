@@ -10,10 +10,17 @@ from urllib.request import urlretrieve
 import config
 
 
-def download_or_convert_from_base64(key, params):
+def required_exists(key, params):
     if key not in params:
-        raise ValueError(f'Uh oh. {key} not found in params. Probably missing a check in pre-processing step.')
+        raise ValueError(f'Required param \'{key}\' not received.')
 
+
+def required_boolean(key, params):
+    if (key in params) and (type(params[key]) != bool):
+        raise ValueError('Param `{key}` must be either true or false (JSON boolean)')
+
+
+def write_temp_from_url_or_base64(key, params):
     value = params[key]
 
     if not isinstance(value, str):
