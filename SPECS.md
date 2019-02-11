@@ -1,6 +1,8 @@
-# Raster vector summary stats (fn-raster-vector-summary-stats)
+# Raster vector summary stats enhanced (fn-raster-vector-summary-stats-enhanced)
 
-Extract summary statistics from raster data for given polygons or points.
+Enhanced version of extract summary statistics from raster data for given polygons or points.
+
+Has additional managed caching and speedups.
 
 ## Parameters
 
