@@ -1,11 +1,11 @@
 provider:
   name: faas
-  gateway: http://faas.srv.locational.io
+  gateway: http://srv.locational.io:8080
 functions:
-  fn-raster-vector-summary-stats_0_0_6:
+  fn-raster-vector-summary-stats-enhanced_0_0_7:
     handler: ./fn-raster-vector-summary-stats
     lang: dockerfile
-    image: disarm/fn-raster-vector-summary-stats:0.0.6
+    image: locational/fn-raster-vector-summary-stats-enhanced:0.0.7
     environment:
 #      write_debug: true
       write_timeout: 60
