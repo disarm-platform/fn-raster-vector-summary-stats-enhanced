@@ -41,7 +41,6 @@ def write_temp_from_url_or_base64(key, params):
 def write_to_file(key, params):
     value = params[key]
 
-    hash = hash_this(value)
     filename = get_file_path()
 
     # Write STRING to file
@@ -57,6 +56,10 @@ def download_to_file(key: str, params: dict):
 
     hash = hash_this(url)
     filename = get_file_path(temp=False, force_name=hash)
+
+    # get Etag from URL
+    # check if not path.exists(filename.etag)
+    # else touch filename.etag
 
     if not path.exists(filename):
         # Download from URL to temporary file

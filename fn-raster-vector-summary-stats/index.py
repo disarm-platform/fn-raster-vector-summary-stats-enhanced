@@ -70,3 +70,11 @@ if __name__ == "__main__":
 
     finally:
         shutil.rmtree(config.TEMP)
+        # hunt for any non-TEMP files accessed more than 30 days ago
+        # now = time.time()
+
+        # for f in os.listdir(path):
+        #     if os.stat(f).st_mtime < now - 7 * 86400:
+        #         if os.path.isfile(f):
+        #             os.remove(os.path.join(path, f))
+
