@@ -54,16 +54,17 @@ def write_to_file(key, params):
 def download_to_file(key: str, params: dict):
     url = params[key]
 
+    # get Etag from URL
     hash = hash_this(url)
+    etag = get_etag(url)
+
+    joined = f'{hash}.{etag}'
     filename = get_file_path(temp=False, force_name=hash)
 
-    # get Etag from URL
-    # check if not path.exists(filename.etag)
-    # else touch filename.etag
-
     if not path.exists(filename):
-        # Download from URL to temporary file
         urlretrieve(url, filename)
+    else:
+        #  touch filename.etag
 
     # Replace params[key] with temporary file name
     params[key] = filename
