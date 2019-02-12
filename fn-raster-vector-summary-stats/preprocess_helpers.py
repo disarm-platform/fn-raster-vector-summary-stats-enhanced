@@ -4,6 +4,7 @@ import json
 import os
 import uuid
 from os import path
+from pathlib import Path
 from urllib.parse import urlparse
 from urllib.request import urlretrieve
 
@@ -56,19 +57,26 @@ def download_to_file(key: str, params: dict):
 
     # get Etag from URL
     hash = hash_this(url)
-    etag = get_etag(url)
+    etag = get_etag(url) # get_etag needs to return either ETag from head, or None
 
-    joined = f'{hash}.{etag}'
-    filename = get_file_path(temp=False, force_name=hash)
-
-    if not path.exists(filename):
-        urlretrieve(url, filename)
+    if etag == None:
+        filename = urlretrieve(url)
     else:
-        #  touch filename.etag
+        joined = f'{hash}.{etag}'
+        filename = get_file_path(temp=False, force_name=joined)
+
+        if not path.exists(filename):
+            urlretrieve(url, filename)
+        else:
+            Path(filename).touch
+
 
     # Replace params[key] with temporary file name
     params[key] = filename
 
+
+def get_etag(url):
+    return None
 
 # Extracts the value from params, decodes from base64 string and writes to a temp file
 # Mutates params
@@ -109,6 +117,8 @@ def hash_this(string: str) -> str:
 def get_file_path(temp: bool = True, force_name: str = ''):
     file_name = force_name or uuid.uuid4().hex
     if temp:
+        # Emptied in cleanup at end of run
         return os.path.join(config.TEMP, file_name)
     else:
+        # Persisted run after run, but emptied on container restart
         return os.path.join('/tmp', file_name)
