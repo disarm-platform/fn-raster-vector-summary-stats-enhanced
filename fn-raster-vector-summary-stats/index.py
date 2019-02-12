@@ -46,8 +46,7 @@ if __name__ == "__main__":
 
     try:
         # Get and parse params
-        # params = get_params_from_stdin()
-        params = json.load(open('samples/swz_tiny_req.json'))
+        params = get_params_from_stdin()
 
         # Mutate the params to get them ready for use
         preprocess_params.preprocess(params)
