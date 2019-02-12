@@ -1,6 +1,6 @@
 provider:
   name: faas
-  gateway: http://srv.locational.io:8080
+  gateway: https://faas.srv.locational.io
 functions:
   fn-raster-vector-summary-stats-enhanced-0-0-7:
     handler: ./fn-raster-vector-summary-stats
