@@ -10,9 +10,6 @@ from urllib.request import urlretrieve
 # Mutates the params, replacing with local temporary file if required
 import config
 
-def required_exists_not_null(key, params):
-    pass
-
 
 def required_exists(key, params):
     if key not in params:
