@@ -14,8 +14,10 @@ import sys
 import config
 
 
+
 def required_exists_not_null(key, params):
     pass
+
 
 
 def required_exists(key, params):
@@ -104,7 +106,7 @@ def decode_base64_to_file(key: str, params: dict):
 
 
 # https://stackoverflow.com/a/52455972/678255
-def is_url(url):
+def is_url(url) -> bool:
     try:
         result = urlparse(url)
         return all([result.scheme, result.netloc])
