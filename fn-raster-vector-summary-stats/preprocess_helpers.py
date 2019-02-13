@@ -7,9 +7,12 @@ from os import path
 from pathlib import Path
 from urllib.parse import urlparse
 from urllib.request import urlretrieve
+import urllib3
+import sys
 
 # Mutates the params, replacing with local temporary file if required
 import config
+
 
 def required_exists_not_null(key, params):
     pass
@@ -54,29 +57,33 @@ def write_to_file(key, params):
 # Mutates params
 def download_to_file(key: str, params: dict):
     url = params[key]
-
     # get Etag from URL
     hash = hash_this(url)
-    etag = get_etag(url) # get_etag needs to return either ETag from head, or None
+    etag = get_etag(url)  # get_etag needs to return either ETag from head, or None
 
     if etag == None:
-        filename = urlretrieve(url)
+        filename = get_file_path()
+        urlretrieve(url, filename)
     else:
         joined = f'{hash}.{etag}'
         filename = get_file_path(temp=False, force_name=joined)
-
         if not path.exists(filename):
             urlretrieve(url, filename)
         else:
             Path(filename).touch
-
-
     # Replace params[key] with temporary file name
     params[key] = filename
 
 
 def get_etag(url):
-    return None
+    try:
+        http = urllib3.PoolManager()
+        response = http.request("HEAD", url)
+        etag = response.headers["ETag"]
+        return etag.replace('"', '')
+    except KeyError:
+        return None
+
 
 # Extracts the value from params, decodes from base64 string and writes to a temp file
 # Mutates params
