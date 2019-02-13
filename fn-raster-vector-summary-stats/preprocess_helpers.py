@@ -85,7 +85,7 @@ def decode_base64_to_file(key: str, params: dict):
 
 
 # https://stackoverflow.com/a/52455972/678255
-def is_url(url):
+def is_url(url) -> bool:
     try:
         result = urlparse(url)
         return all([result.scheme, result.netloc])
