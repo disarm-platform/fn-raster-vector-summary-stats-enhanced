@@ -12,12 +12,12 @@ def test_broken():
 def test_true():
     params = {'egg': True}
     actual = required_boolean('egg', params)
-    expected = None
+    expected = True
     assert actual == expected
 
 
 def test_false():
     params = {'egg': False}
     actual = required_boolean('egg', params)
-    expected = None
+    expected = True
     assert actual == expected
