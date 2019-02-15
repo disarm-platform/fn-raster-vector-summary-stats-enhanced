@@ -23,11 +23,13 @@ def required_exists_not_null(key, params):
 def required_exists(key, params):
     if key not in params:
         raise ValueError(f'Required param \'{key}\' not received.')
+    return True
 
 
 def required_boolean(key, params):
     if (key in params) and (type(params[key]) != bool):
         raise ValueError('Param `{key}` must be either true or false (JSON boolean)')
+    return True
 
 
 def write_temp_from_url_or_base64(key, params):
