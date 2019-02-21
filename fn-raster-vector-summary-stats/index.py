@@ -27,18 +27,18 @@ def handle_error(error, message='Unknown error, please ask the admins to check c
     start = "Error from function: "
 
     if type(error) is not ValueError:
-        content = start + str(message)
+        result = start + str(message)
     else:
-        content = start + str(error)
+        result = start + str(error)
     print(json.dumps({"function_status": "error",
-                      "content": content}))
+                      "result": result}))
 
 
-# Please give me content that JSON-dumpable:
+# Please give me result that JSON-dumpable:
 #   e.g. a string, could be base64-encoded, or some JSON-like object
-def handle_success(content):
+def handle_success(result):
     print(json.dumps({"function_status": "success",
-                      "content": content}))
+                      "result": result}))
 
 
 if __name__ == "__main__":
