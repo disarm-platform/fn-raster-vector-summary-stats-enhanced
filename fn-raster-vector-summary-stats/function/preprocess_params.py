@@ -13,7 +13,7 @@ def preprocess(params: dict):
     # params['stats'] if exists, must only include 'max',
     if 'stats' in params:
         stats = params['stats']
-        all_possible_options = ['max', 'min', 'mean']
+        all_possible_options = ['min', 'max', 'mean', 'count', 'sum', 'std', 'median', 'majority', 'minority', 'unique', 'range', 'nodata']
 
         for stat in stats.split(' '):
             if stat not in all_possible_options:
