@@ -20,8 +20,11 @@ def run_function(params):
             features = zonal_stats(loaded_subject, raster, stats=stats, geojson_out=geojson_out)
         elif subject_type == 'Point':
             features = point_query(loaded_subject, raster, geojson_out=geojson_out)
+        elif subject_type == 'Unknown':
+            sys.stderr.write("Schema type 'unknown': could be either Points/MultiPoints or Polygons/MultiPolygons. Trying `zonal_stats` as a guess.")
+            features = zonal_stats(loaded_subject, raster, stats=stats, geojson_out=geojson_out)
         else:
-            raise ValueError("Input features need to be either all Polygons or Points. Doesn't look like they are.")
+            raise ValueError("Input features need to have a geometry type of MultiPolygon or Polygon or Point. Doesn't look like they are.")
 
         # Decorate return as either GeoJSON FeatureCollection (other way to do this?) or just the array of stats
         if geojson_out:
