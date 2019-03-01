@@ -5,7 +5,7 @@ functions:
   fn-raster-vector-summary-stats-enhanced:
     handler: ./fn-raster-vector-summary-stats
     lang: dockerfile
-    image: locational/fn-raster-vector-summary-stats-enhanced:0.2.1
+    image: locational/fn-raster-vector-summary-stats-enhanced:0.3.0
     environment:
 #      write_debug: true
       write_timeout: 60

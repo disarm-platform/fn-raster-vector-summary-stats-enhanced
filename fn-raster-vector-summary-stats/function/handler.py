@@ -16,7 +16,7 @@ def run_function(params):
         loaded_subject = fiona.open(subject)
         subject_type = loaded_subject.schema['geometry']
 
-        if subject_type == 'Polygon':
+        if subject_type in ['Polygon', 'MultiPolygon']:
             features = zonal_stats(loaded_subject, raster, stats=stats, geojson_out=geojson_out)
         elif subject_type == 'Point':
             features = point_query(loaded_subject, raster, geojson_out=geojson_out)
