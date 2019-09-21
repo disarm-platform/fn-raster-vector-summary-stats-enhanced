@@ -29,6 +29,9 @@ def run_function(params):
             return FeatureCollection(features)
         else:
             return features
+    except ValueError as e:
+        if e == 'Specify either bounds or window':
+            raise ValueError("One or more features are lacking geometry or have null/empty values")
 
     except AttributeError:
         raise ValueError("Error calculating zonalstats. Please confirm every input "
