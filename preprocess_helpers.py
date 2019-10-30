@@ -56,7 +56,7 @@ def download_to_file(key: str, params: dict):
     url = params[key]
 
     hash = hash_this(url)
-    filename = get_file_path(temp=False, force_name=hash)
+    filename = get_file_path(temp=True, force_name=hash)
 
     if not path.exists(filename):
         # Download from URL to temporary file

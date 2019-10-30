@@ -10,41 +10,17 @@ JSON object containing:
 
 - `raster`: _{string: Base64-encoded image file or URL}_ Source raster containing values to extract.
 - `subject`: _{GeoJSON FeatureCollection of Polygons or Points, URL}_ GeoJSON of polygons or points.
-- `stats`: _{string}_ Defaults to `mean`. For _polygons_, pass one or more of `mean`, `max`, `min`, `mode`, `sum`, `count` separated by spaces e.g. `max mean`. Not required (and ignored) for _points_.
-- `buffer_km`: _{optional, integer}_ If given and the `subject` contains _Points_ (or _MultiPoints_), then the stats will be calculated for a polygon buffering the point by the given distance.
-- `geojson_out`: _{boolean}_ Default `true`.
-  - For _polygons_: If `true`, return the incoming GeoJSON with additional properties named as given in `stats`. If `false`, return an array of extracted values named as given in `stats`.
-  - For _points_: If `true`, return the incoming GeoJSON with an additional property of `value`. If `false`, return an array of the extracted values.
+- `stats`: _{string}_ Defaults to `mean`. For _polygons_, pass a comma-separated list of one or more of `mean`, `max`, `min`, `mode`, `sum`, `count`. Not required (and ignored) for _points_ without a buffer.
+- `buffer_km`: _{optional, integer}_ If given and the `subject` contains _Points_ (or _MultiPoints_), then the stats will be calculated for a polygon buffering the point by the given distance. Will be ignored if polygons are provided.
+- `geojson_out`: _{boolean}_ Default `true`. 
 
 ## Constraints
 
-- maximum size of `polygons` is ~XX MB or ~YY polygons or ~ZZ total area in kms
+- maximum size of `subject` is ~XX MB or ~YY polygons or ~ZZ total area in kms
 
 ## Response
+Depends on `geojson_out`:
 
-See `geojson_out` above.
-
-## Example
-
-### Input
-
-```
-{
-  
-}
-```
-
-### Output
-
-```
-{
-}
-```
-
-
-## Use cases
-
-### WorldPop 1km population extractor
-
-Use `worldpop-1km:latest` as the `raster` parameter.
-
+- For _polygons_: If `true`, return the incoming GeoJSON with additional properties named as given in `stats`. If `false`, return an array of extracted values named as given in `stats`.
+- For _points_ without `buffer_km`: If `true`, return the incoming GeoJSON with an additional property of `value`. If `false`, return an array of the extracted values.
+- For _points_ with `buffer_km`: If `false`, return an array of the extracted values. If `true`: return `points` including the stats from the buffered areas. (Plan is to add additional feature to return `buffer_polys`)
