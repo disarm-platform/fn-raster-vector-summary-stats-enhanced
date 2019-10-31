@@ -8,7 +8,7 @@ from urllib.parse import urlparse
 from urllib.request import urlretrieve
 
 # Mutates the params, replacing with local temporary file if required
-import config
+import tempdir
 
 def required_exists_not_null(key, params):
     pass
@@ -105,6 +105,6 @@ def hash_this(string: str) -> str:
 def get_file_path(temp: bool = True, force_name: str = ''):
     file_name = force_name or uuid.uuid4().hex
     if temp:
-        return os.path.join(config.TEMP, file_name)
+        return os.path.join(tempdir.TEMP, file_name)
     else:
         return os.path.join('/tmp', file_name)

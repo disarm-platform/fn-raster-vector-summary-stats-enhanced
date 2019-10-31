@@ -4,7 +4,7 @@ provider:
 functions:
   fn-raster-vector-summary-stats-enhanced:
     lang: python-geospatial
-    handler: ./fn-raster-vector-summary-stats-enhanced
+    handler: ./function
     image: disarm/fn-raster-vector-summary-stats-enhanced:1.0.0
     environment:
       combine_output: false
