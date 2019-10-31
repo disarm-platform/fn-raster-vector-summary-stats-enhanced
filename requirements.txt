@@ -1,3 +1,0 @@
-rasterstats
-geojson
-requests
