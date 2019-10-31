@@ -1,7 +1,2 @@
 template
 build
-.DS_Store
-fn-raster-extract/fwatchdog
-.vscode
-.idea
-__pycache__
