@@ -3,7 +3,7 @@ provider:
   gateway: https://faas.srv.disarm.io
 functions:
   fn-raster-vector-summary-stats-enhanced:
-    lang: python-geospatial
+    lang: dockerfile
     handler: ./fn-raster-vector-summary-stats-enhanced
     image: disarm/fn-raster-vector-summary-stats-enhanced:0.5.0
     environment:
