@@ -1,0 +1,15 @@
+provider:
+  name: openfaas
+  gateway: https://faas.srv.disarm.io
+functions:
+  fn-raster-vector-summary-stats-enhanced:
+    lang: python-geospatial
+    handler: ./fn-raster-vector-summary-stats-enhanced
+    image: disarm/fn-raster-vector-summary-stats-enhanced:0.5.0
+    environment:
+      exec_timeout: 1020
+      write_timeout: 1000
+      read_timeout: 1000
+      combine_output: false
+    labels:
+      com.openfaas.scale.zero: true
