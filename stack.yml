@@ -4,7 +4,7 @@ provider:
 functions:
   fn-raster-vector-summary-stats-enhanced:
     lang: dockerfile
-    handler: ./fn-raster-vector-summary-stats-enhanced
+    handler: ./
     image: disarm/fn-raster-vector-summary-stats-enhanced:0.5.0
     environment:
       exec_timeout: 1020
