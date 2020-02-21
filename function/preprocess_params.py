@@ -15,6 +15,6 @@ def preprocess(params: dict):
         stats = params['stats']
         all_possible_options = ['min', 'max', 'mean', 'count', 'sum', 'std', 'median', 'majority', 'minority', 'unique', 'range', 'nodata']
 
-        for stat in stats.split(','):
+        for stat in stats.split(' '):
             if stat.strip() not in all_possible_options:
                 raise ValueError(f'Unsupported `stat` parameter of \'{stat}\'')
